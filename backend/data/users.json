@@ -1,0 +1,17 @@
+[
+  {
+    "id": "b665a9d5-cf00-4a5b-8e87-a3c3461c0989",
+    "email": "pn6009909@gmail.com",
+    "name": "magic",
+    "password": "$2a$10$P7T5Bw5NPVcOOR0EiPI5hudJi4gUljK165jgk3Q/HyiymHDA8oMde",
+    "createdAt": "2025-02-06T07:13:55.127Z"
+  },
+  {
+    "id": "0c26f7df-19e3-486a-88f9-b8e40e9aa6ec",
+    "discordId": "1076147783087689798",
+    "email": "pn6009908@gmail.com",
+    "name": "magic_plays",
+    "avatar": "https://cdn.discordapp.com/avatars/1076147783087689798/bdb2a958736414a9ae8fd410ffd0d9d7.png",
+    "createdAt": "2025-02-06T07:20:44.134Z"
+  }
+]

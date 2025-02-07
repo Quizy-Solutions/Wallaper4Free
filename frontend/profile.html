@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Wallpaper4Free</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Move Tailwind to the end of body -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="/frontend/index.html" class="flex items-center">
+                        <i class="fas fa-arrow-left text-primary-600 text-xl mr-2"></i>
+                        <span class="text-xl font-medium text-gray-900">Go Back</span>
+                    </a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div id="userSection" class="hidden">
+                        <div class="relative">
+                            <img id="userAvatar" class="w-10 h-10 rounded-full cursor-pointer border-2 border-transparent hover:border-white transition" src="" alt="User" onclick="toggleDropdown()">
+                            <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden">
+                                <a href="#" onclick="showProfilePage(currentUser.name); return false;" class="block px-4 py-2 text-gray-800 hover:bg-primary-50">
+                                    <i class="fas fa-user mr-2"></i>Profile
+                                </a>
+                                <a href="#" onclick="showSettings(); return false;" class="block px-4 py-2 text-gray-800 hover:bg-primary-50">
+                                    <i class="fas fa-cog mr-2"></i>Settings
+                                </a>
+                                <hr class="my-2">
+                                <button onclick="logout()" class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50">
+                                    <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="loginSection" class="flex items-center space-x-4">
+                        <button id="loginBtn" class="text-primary-600 hover:text-primary-700 font-medium">Login</button>
+                        <button id="registerBtn" class="bg-primary-600 text-white px-6 py-2 rounded-full hover:bg-primary-700 transition">Register</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Header -->
+    <div class="pt-16">
+        <!-- Profile Cover -->
+        <div class="h-48 md:h-64 bg-gradient-to-r from-primary-600 to-primary-800 relative">
+            <div class="absolute -bottom-16 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+                <img id="profileAvatar" class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white shadow-lg" src="" alt="Profile">
+                <h1 id="profileName" class="text-2xl md:text-3xl font-bold text-gray-900 mt-4"></h1>
+                <p id="profileJoinDate" class="text-gray-500"></p>
+            </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="mt-24 bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 py-6">
+                <div class="flex justify-center space-x-12">
+                    <div class="text-center">
+                        <span id="profileWallpaperCount" class="block text-2xl md:text-3xl font-bold text-primary-600"></span>
+                        <span class="text-gray-500">Wallpapers</span>
+                    </div>
+                    <div class="text-center">
+                        <span id="profileDownloadCount" class="block text-2xl md:text-3xl font-bold text-primary-600"></span>
+                        <span class="text-gray-500">Downloads</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <!-- Filter Bar -->
+            <div class="flex justify-between items-center mb-6 bg-white p-4 rounded-lg shadow-sm">
+                <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 w-full">
+                    <select id="profileCategoryFilter" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                        <option value="">All Categories</option>
+                        <option value="nature">Nature</option>
+                        <option value="abstract">Abstract</option>
+                        <option value="minimal">Minimal</option>
+                        <option value="space">Space</option>
+                        <option value="animals">Animals</option>
+                        <option value="technology">Technology</option>
+                    </select>
+                    <select id="profileSortFilter" class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                        <option value="recent">Most Recent</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="name">Name</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Wallpapers Grid -->
+            <div id="profileWallpapers" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Wallpapers will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="authTitle" class="text-2xl font-bold text-gray-900">Login</h2>
+                <button id="closeAuthModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="authForm" class="space-y-4">
+                <div id="nameField" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700">Name</label>
+                    <input type="text" name="name" class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" name="email" required class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" name="password" autocomplete="current-password" required class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                </div>
+                <button type="submit" class="w-full bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition">
+                    <span id="authButtonText">Login</span>
+                </button>
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                    </div>
+                </div>
+                <button type="button" id="discordLogin" class="w-full bg-[#7289DA] text-white px-4 py-2 rounded-lg hover:bg-[#677BC4] transition flex items-center justify-center">
+                    <i class="fab fa-discord mr-2"></i> Login with Discord
+                </button>
+                <p class="text-center text-sm text-gray-600">
+                    <span id="authToggleText">Don't have an account?</span>
+                    <button type="button" id="authToggle" class="text-primary-600 hover:text-primary-800 ml-1">Register</button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="previewModal" class="fixed inset-0 bg-black/90 backdrop-blur-sm hidden items-center justify-center z-50">
+        <div class="w-full h-full p-4 relative">
+            <button id="closePreviewModal" class="absolute top-6 right-6 text-white hover:text-white/80 z-50 p-2 bg-black/50 rounded-full">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+            
+            <div class="h-full flex flex-col lg:flex-row items-center justify-center gap-6">
+                <!-- Image Section -->
+                <div class="w-full lg:w-3/4 h-3/4 lg:h-full flex items-center justify-center">
+                    <img id="previewImage" src="" alt="Wallpaper Preview" 
+                         class="max-w-full max-h-full object-contain rounded-xl shadow-2xl">
+                </div>
+
+                <!-- Info Section -->
+                <div class="w-full lg:w-1/4 h-auto max-h-[90vh] overflow-y-auto bg-white/95 backdrop-blur-md rounded-xl shadow-2xl p-6 flex flex-col">
+                    <div class="flex items-center mb-6">
+                        <img id="previewUserAvatar" class="w-12 h-12 rounded-full border-2 border-primary-500 mr-3" src="" alt="User">
+                        <div>
+                            <a id="previewUserName" href="#" class="text-lg font-medium text-gray-900 hover:text-primary-600"></a>
+                            <p id="downloadCount" class="text-sm text-gray-500"></p>
+                        </div>
+                    </div>
+
+                    <h3 id="previewTitle" class="text-2xl font-bold text-gray-900 mb-2"></h3>
+                    <p id="previewDescription" class="text-gray-600 mb-6"></p>
+
+                    <div class="mt-auto space-y-4">
+                        <button id="downloadBtn" class="w-full flex items-center justify-center px-6 py-4 text-lg font-medium text-black bg-primary-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-primary-700 active:transform active:scale-95">
+                            <i class="fas fa-download mr-2 text-xl"></i>
+                            <span>Download Wallpaper</span>
+                        </button>
+                        <button id="closePreviewBtn" class="w-full bg-gray-100 text-gray-800 px-6 py-4 rounded-xl hover:bg-gray-200 transition-all duration-300 flex items-center justify-center text-lg font-medium">
+                            Close Preview
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div id="uploadModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Upload Wallpaper</h2>
+                <button id="closeUploadModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="uploadForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Wallpaper Image</label>
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg upload-zone">
+                        <div class="space-y-1 text-center">
+                            <i class="fas fa-cloud-upload-alt text-4xl text-gray-400"></i>
+                            <div class="flex text-sm text-gray-600">
+                                <label for="wallpaperFile" class="relative cursor-pointer bg-white rounded-md font-medium text-primary-600 hover:text-primary-500">
+                                    <span>Upload a file</span>
+                                    <input id="wallpaperFile" name="image" type="file" class="sr-only" accept="image/*" required>
+                                </label>
+                            </div>
+                            <p class="text-xs text-gray-500">PNG, JPG, WebP up to 5MB</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Name</label>
+                    <input type="text" name="name" required class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea name="description" required class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Category</label>
+                    <select name="category" required class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                        <option value="nature">Nature</option>
+                        <option value="abstract">Abstract</option>
+                        <option value="minimal">Minimal</option>
+                        <option value="space">Space</option>
+                        <option value="animals">Animals</option>
+                        <option value="technology">Technology</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition">
+                    Upload Wallpaper
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Define API_URL before loading scripts -->
+    <script>
+        const API_URL = 'http://localhost:3001';
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Global variables and functions
+        let currentUser = null;
+        let accessToken = null;
+
+        // UI update function
+        function updateUIForLoggedInUser() {
+            const loginSection = document.getElementById('loginSection');
+            const userSection = document.getElementById('userSection');
+            if (loginSection && userSection) {
+                loginSection.classList.add('hidden');
+                userSection.classList.remove('hidden');
+                const userAvatar = document.getElementById('userAvatar');
+                if (userAvatar && currentUser) {
+                    userAvatar.src = currentUser.avatar || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp';
+                    userAvatar.alt = currentUser.name;
+                }
+            }
+        }
+
+        // Preview modal function
+        function showPreviewModal(wallpaper) {
+            const previewModal = document.getElementById('previewModal');
+            const previewImage = document.getElementById('previewImage');
+            const previewTitle = document.getElementById('previewTitle');
+            const previewDescription = document.getElementById('previewDescription');
+            const previewUserAvatar = document.getElementById('previewUserAvatar');
+            const previewUserName = document.getElementById('previewUserName');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const shareBtn = document.getElementById('shareBtn');
+            const downloadCount = document.getElementById('downloadCount');
+            const previewCategory = document.getElementById('previewCategory');
+            const previewDate = document.getElementById('previewDate');
+            
+            previewImage.src = `${API_URL}${wallpaper.imagePath}`;
+            previewTitle.textContent = wallpaper.name;
+            previewDescription.textContent = wallpaper.description;
+            downloadCount.textContent = `${wallpaper.downloads || 0} downloads`;
+            previewCategory.textContent = wallpaper.category;
+            previewDate.textContent = new Date(wallpaper.createdAt).toLocaleDateString();
+            
+            // Fetch and display user info
+            fetch(`${API_URL}/users/${wallpaper.userId}`)
+                .then(res => res.json())
+                .then(data => {
+                    previewUserAvatar.src = data.user.avatar || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp';
+                    previewUserName.textContent = data.user.name;
+                    previewUserName.href = `/frontend/profile.html?username=${encodeURIComponent(data.user.name)}`;
+                });
+            
+            downloadBtn.onclick = () => downloadWallpaper(wallpaper);
+            shareBtn.onclick = () => {
+                const url = `${window.location.origin}/frontend/profile.html?username=${username}`;
+                navigator.clipboard.writeText(url);
+                showToast('Link copied to clipboard!', 'success');
+            };
+            
+            previewModal.classList.remove('hidden');
+            previewModal.classList.add('flex');
+        }
+
+        // Download function
+        async function downloadWallpaper(wallpaper) {
+            if (!currentUser || !accessToken) {
+                showToast('Please log in to download wallpapers', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/wallpapers/${wallpaper.id}/download`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    const link = document.createElement('a');
+                    link.href = `${API_URL}${wallpaper.imagePath}`;
+                    link.download = wallpaper.name;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            } catch (error) {
+                showToast('Failed to download wallpaper', 'error');
+            }
+        }
+
+        // Toast function
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+    </script>
+    <script src="profile.js"></script>
+</body>
+</html> 
