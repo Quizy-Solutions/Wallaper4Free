@@ -97,10 +97,6 @@ A modern, feature-rich wallpaper sharing platform built with JavaScript and Node
    - Frontend: `http://localhost:3000`
    - Backend API: `http://localhost:3001`
 
-## 📸 Screenshots
-
-[Add your application screenshots here]
-
 ## 🔒 Security Features
 
 - Password hashing with bcrypt
@@ -108,14 +104,6 @@ A modern, feature-rich wallpaper sharing platform built with JavaScript and Node
 - File upload validation
 - CORS protection
 - Input sanitization
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## 👨‍💻 Author
 
@@ -130,3 +118,5 @@ A modern, feature-rich wallpaper sharing platform built with JavaScript and Node
 
 ---
 ⭐️ Star this repo if you find it helpful!
+
+## 🚀 The Entire Project is Made by Using AI in Just 2 Hours! 🤖⏳
