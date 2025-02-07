@@ -117,10 +117,6 @@ A modern, feature-rich wallpaper sharing platform built with JavaScript and Node
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 👨‍💻 Author
 
 **403_FORBIDDEN** - [QuizySolution](https://github.com/Quizy-Solutions)
