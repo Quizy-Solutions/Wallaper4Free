@@ -56,7 +56,7 @@ A modern, feature-rich wallpaper sharing platform built with JavaScript and Node
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/QuizySolution/wallpaper4free.git
+   git clone https://github.com/Quizy-Solutions/Wallaper4Free.git
    cd wallpaper4free
    ```
 
